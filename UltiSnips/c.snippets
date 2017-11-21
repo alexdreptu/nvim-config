@@ -1,0 +1,99 @@
+snippet inc "" !b
+#include <$0>
+endsnippet
+
+snippet Inc "" !b
+#include "$0"
+endsnippet
+
+snippet def "" !b
+#define $0
+endsnippet
+
+snippet ifn "" !b
+#ifndef ${1:NAME}
+	${0:code}
+#endif
+endsnippet
+
+snippet ifd "" !b
+#ifdef ${1:NAME}
+	${0:code}
+#endif
+endsnippet
+
+snippet main "" !b
+int main(int argc, char *argv[]) {
+	$0
+}
+endsnippet
+
+snippet com "" !w
+/* $0 */
+endsnippet
+
+snippet str "" !w
+struct $0
+endsnippet
+
+snippet uns "" !w
+unsigned $0
+endsnippet
+
+snippet unsi "" !w
+unsigned int $0
+endsnippet
+
+snippet st "" !w
+static $0
+endsnippet
+
+snippet inl "" !w
+inline $0
+endsnippet
+
+snippet con "" !w
+const $0
+endsnippet
+
+snippet ret "" !b
+return$0;
+endsnippet
+
+snippet pr "" !b
+print($0);
+endsnippet
+
+snippet prf "" !b
+printf($0);
+endsnippet
+
+snippet prl "" !b
+printf("$0\n");
+endsnippet
+
+snippet spr "" !b
+sprintf($0);
+endsnippet
+
+snippet fpr "" !b
+fprintf($0);
+endsnippet
+
+snippet fprl "" !b
+fprintf(${1:file}, "${0:string}\n");
+endsnippet
+
+snippet br "" !w
+break;
+endsnippet
+
+snippet cont "" !w
+continue;
+endsnippet
+
+snippet do "" !w
+do {
+	${1:code}
+} while (${0:condition});
+endsnippet

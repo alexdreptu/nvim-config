@@ -1,0 +1,97 @@
+snippet defsys "" !b
+(defsystem "${1:?}"
+  :description "${2:?}"
+  :version "${3:?}"
+  :author "${4:?}"
+  :licence "${5:?}"
+  :depends-on ("${6:?}")
+  :components ((:file "${7:?}"))
+endsnippet
+
+snippet defp "" !b
+(defpackage $0)
+endsnippet
+
+snippet req "" !b
+(require $0)
+endsnippet
+
+snippet defm "" !b
+(defmacro $0)
+endsnippet
+
+snippet deff "" !w
+(defun $0)
+endsnippet
+
+snippet defv "" !w
+(defvar $9)
+endsnippet
+
+snippet dec "" !w
+(declare $0)
+endsnippet
+
+snippet pr "" !w
+(print $0)
+endsnippet
+
+snippet ppr "" !w
+(pprint $0)
+endsnippet
+
+snippet wr "" !w
+(write $0)
+endsnippet
+
+snippet wrl "" !w
+(write-line $0)
+endsnippet
+
+snippet rd "" !w
+(read $0)
+endsnippet
+
+snippet rdl "" !w
+(read-line $0)
+endsnippet
+
+snippet defpar "" !w
+(defparameter $0)
+endsnippet
+
+snippet opt "" !w
+(optimize $0)
+endsnippet
+
+snippet pos "" !w
+(position $0)
+endsnippet
+
+snippet for "" !w
+(format $0)
+endsnippet
+
+snippet ret "" !w
+(return)
+endsnippet
+
+snippet retf "" !w
+(return-from $0)
+endsnippet
+
+snippet bl "" !w
+(block $0)
+endsnippet
+
+snippet cond "" !w
+(cond $0)
+endsnippet
+
+snippet car "" !w
+(car $0)
+endsnippet
+
+snippet cdr "" !w
+(cdr $0)
+endsnippet

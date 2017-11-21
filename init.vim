@@ -154,23 +154,19 @@ set omnifunc=javascriptcomplete#CompleteJS
 
 " when you select a function in omni menu and press enter,
 " doesn't insert new line, instead it just selects the function
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>" // seems to
-"create issues with clang_completion
-
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-            \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-            \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
+" but seems to create issues with clang_completion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>" 
 
 " open omni completion menu closing previous if open and opening new menu without changing the text
 inoremap <silent> <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<cr>'
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>M-j>\<lt>M-k>\<lt>Down>" : ""<cr>'
 
 inoremap <C-u> <C-g>u<C-u>
+inoremap <C-@> <C-x><C-o>
 
-if !has("gui_running")
-    inoremap <C-@> <C-x><C-o>
-endif
+inoremap <expr><M-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr><M-k> pumvisible() ? "\<C-p>" : "\<Up>"
+"inoremap <expr><M-l> pumvisible() ? "\<C-y>" : "\<C-l>"
 
 "noremap <Leader>y "*y
 "noremap <Leader>p "*p
@@ -258,37 +254,21 @@ function! <SID>SynStack()
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-if has("gui_running")
-    command! -nargs=0 -bar Update if &modified 
-                \|    if empty(bufname('%'))
-                    \|        browse confirm write
-                    \|    else
-                        \|        confirm write
-                        \|    endif
-                        \|endif
-endif
-nnoremap <silent> <C-S> :<C-u>Update <cr>
+nnoremap <silent> <C-s> :update<cr>
 
 if !exists("*ReloadConfigs")
     function ReloadConfigs()
         source $MYVIMRC
+        "source $MYGVIMRC
         execute "colorscheme" g:colors_name
-        if has("gui_running")
-            source $MYGVIMRC
-        endif
     endfunction
     command! Recfg call ReloadConfigs()
 endif
+
 nnoremap <silent> <F11> :Recfg<cr>
-
-if has("gui_running")
-    nnoremap <silent> <F10> :set guifont=* <cr>
-endif
-
-nnoremap <silent> <C-w>d :bdel <cr>
-
-nnoremap <silent> g<S-l> :tabm +1 <cr>
-nnoremap <silent> g<S-h> :tabm -1 <cr>
+nnoremap <silent> <C-w>d :bdel<cr>
+nnoremap <silent> g<S-l> :tabm +1<cr>
+nnoremap <silent> g<S-h> :tabm -1<cr>
 " ----- </shortcuts> ----- "
 
 " ----- <plugin> ----- "
@@ -385,15 +365,15 @@ let g:ctrlp_open_new_file = 't'
 let g:ctrlp_tabpage_position = "ac"
 let g:ctrlp_extensions = ['tag', 'buffertag', 'line']
 let g:ctrlp_prompt_mappings = {
-            \ 'PrtSelectMove("j")': ['<c-n>', '<down>'],
-            \ 'PrtSelectMove("k")': ['<c-p>', '<up>'],
+            \ 'PrtSelectMove("j")': ['<c-j>', '<down>'],
+            \ 'PrtSelectMove("k")': ['<c-k>', '<up>'],
             \ 'PrtHistory(-1)': ['<c-j>'],
             \ 'PrtHistory(1)': ['<c-k>'],
             \ }
-nnoremap <silent> <C-b> :CtrlPBuffer<cr>
-nnoremap <silent> <C-l> :CtrlPLine<cr>
-nnoremap <silent> <C-t>a :CtrlPTag<cr>
-nnoremap <silent> <C-t>c :CtrlPBufTag<cr>
+nnoremap <silent> <C-x>b :CtrlPBuffer<cr>
+nnoremap <silent> <C-x>l :CtrlPLine<cr>
+nnoremap <silent> <C-x>ta :CtrlPTag<cr>
+nnoremap <silent> <C-x>tc :CtrlPBufTag<cr>
 
 " Clang_Complete related
 let g:clang_snippets = 0
@@ -485,16 +465,17 @@ let g:racer_experimental_completer = 1
 " Automatic vim-plug installation
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 " Plugins and Scripts
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'equalsraf/neovim-gui-shim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-syntastic/syntastic'
-Plug 'roxma/nvim-completion-manager'
+"Plug 'roxma/nvim-completion-manager'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'

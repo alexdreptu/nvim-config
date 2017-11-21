@@ -1,0 +1,116 @@
+snippet sh "Add shebang" !b
+#!/usr/bin/env python
+$0
+endsnippet
+
+snippet cod "" !b
+# -*- coding: utf-8 -*-
+$0
+endsnippet
+
+snippet stp "" !b
+setup(name='${1:name}',
+	version='${2:0.1}',
+	description='${3:description}',
+	long_description='${4:description}',
+	keywords='${5:keywords}',
+	url='http://github.com/${6:alexdreptu}/${7:project-name}',
+	author='${8:Alexandru Dreptu}',
+	author_email='${9:alexdreptu@gmail.com}',
+	license='${10:MIT}',
+	packages=['${11:package}'],
+	install_requires=[
+		'${12:package}',
+	],
+	test_suite='${13:nose.collector}',
+	tests_require=['${14:name}'],
+	include_package_data=${15:True},
+	zip_safe=${16:False})$0
+endsnippet
+
+snippet fr "" !b
+from $0
+endsnippet
+
+snippet im
+import $0
+endsnippet
+
+snippet doc
+"""$0"""
+endsnippet
+
+snippet info
+__appname__ = '$1'
+__vesion__ = '$2'
+__author__ = 'Alexandru Dreptu <alexdreptu@gmail.com'
+__license__ = '$3'
+__copyright__ = 'Copyright (c) ${4:<year>} Alexandru Dreptu'
+endsnippet
+
+snippet main "" !b
+if __name__ == '__main__':
+	$0
+endsnippet
+
+snippet pr "" !w
+print($0)
+endsnippet
+
+snippet ver
+version
+endsnippet
+
+snippet exc "" !b
+except $0
+endsnippet
+
+snippet fin "" !b
+finally:
+	$0
+endsnippet
+
+snippet tr "" !w
+True
+endsnippet
+
+snippet fa "" !w
+False
+endsnippet
+
+snippet no "" !w
+None
+endsnippet
+
+snippet ret "" !b
+return $0
+endsnippet
+
+snippet br "" !b
+break
+endsnippet
+
+snippet con "" !b
+continue
+endsnippet
+
+snippet gl "" !b
+global $0
+endsnippet
+
+snippet non "" !b
+nonlocal $0
+endsnippet
+
+snippet init "" !w
+def __init__(self, $1):
+	${0:pass}
+endsnippet
+
+snippet cl "" !b
+class $0
+endsnippet
+
+snippet str "" !w
+__str__$0
+endsnippet

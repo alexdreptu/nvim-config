@@ -1,0 +1,130 @@
+snippet pac "" !b
+package $0
+endsnippet
+
+snippet im "" !b
+import (
+	"${1:}"
+)
+endsnippet
+
+snippet com "" !w
+/* $1 */
+endsnippet
+
+snippet main "" !b
+func main() {
+	$0
+}
+endsnippet
+
+snippet st "" !w
+struct $0
+endsnippet
+
+snippet map "" !w
+map[${1:keytype}]${0:valtype}
+endsnippet
+
+snippet err "" !b
+if err != nil {
+	fmt.Fprintln(os.Stderr, err)
+	os.Exit(1)
+}
+endsnippet
+
+snippet ierr "" !b
+if err := ${1:pkg.Func()}; err != nil {
+	fmt.Fprintf(os.Stderr, "error: %s\n", err)
+	os.Exit(1)
+}
+
+$0
+endsnippet
+
+snippet pr "" !b
+fmt.Print($0)
+endsnippet
+
+snippet prl "" !b
+fmt.Println($0)
+endsnippet
+
+snippet prf "" !b
+fmt.Printf($0)
+endsnippet
+
+snippet fpr "" !b
+fmt.Fprint($0)
+endsnippet
+
+snippet fprl "" !b
+fmt.Fprintln($0)
+endsnippet
+
+snippet desc "" !b
+Describe("$1", func() {
+	$0
+})
+endsnippet
+
+snippet cont "" !b
+Context("$1", func() {
+	$0
+})
+endsnippet
+
+snippet it "" !b
+It("$1", func() {
+	$0
+})
+endsnippet
+
+snippet ret "" !b
+return $0
+endsnippet
+
+snippet cobracmd "" !b
+var $1 = &cobra.Command{
+	Use: "$2",
+	Short: "$3",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		$0
+		return nil
+	},
+}
+endsnippet
+
+snippet def "" !b
+defer $0
+endsnippet
+
+snippet deff "" !b
+defer func() {
+	$0
+}()
+endsnippet
+
+snippet fn "" !b
+func ${1:name}(${2:args}) ${3:type} {
+	${0:code}
+}
+endsnippet
+
+snippet con "" !w
+const $0
+endsnippet
+
+snippet exit "" !b
+os.Exit($0)
+endsnippet
+
+snippet sleep "" !b
+time.Sleep($0)
+endsnippet
+
+snippet init "" !b
+func init() {
+	$0
+}
+endsnippet

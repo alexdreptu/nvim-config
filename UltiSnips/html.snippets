@@ -1,0 +1,176 @@
+snippet base "" !b
+<!doctype html>
+
+<html>
+<head lang="en">
+	<meta charset="utf-8">
+	<title>${1:?}</title>
+</head>
+
+<body>
+	${0:?}
+</body>
+</html>
+endsnippet
+
+snippet doc "" !b
+<!doctype html>
+$0
+endsnippet
+
+snippet tags "" !b
+<html>
+<head lang="en">
+	$1
+</head>
+
+<body>
+	$0
+</body>
+</html
+endsnippet
+
+snippet tit "" !w
+<title>$1</title>$0
+endsnippet
+
+snippet desc "" !b
+<meta name="description" content="$1"/>$0
+endsnippet
+
+snippet char "" !b
+<meta charset="utf-8">$0
+endsnippet
+
+snippet com "" !w
+<!-- $1 -->
+endsnippet
+
+snippet html "" !b
+<html>
+	$0
+</html>
+endsnippet
+
+snippet st "" !b
+<style>
+	$0
+</style>
+endsnippet
+
+snippet St "" !b
+<link rel="stylesheet" href="${0:path?}"/>
+endsnippet
+
+snippet scr "" !b
+<script>
+	$0
+</script>
+endsnippet
+
+snippet Scr "" !b
+<script src="${0:?}"></script>
+endsnippet
+
+snippet nos "" !b
+<noscript>$0</noscript>
+endsnippet
+
+snippet img "" !b
+<img src="${1:?}" alt="${0:alt?}"/>
+endsnippet
+
+snippet div "" !b
+<div id="$1">$0</div>
+endsnippet
+
+snippet divc "" !b
+<div class="$1">$0</div>
+endsnippet
+
+snippet cl "" !w
+class="${0:?}"
+endsnippet
+
+snippet but "" !w
+<button $1>$0</button>
+endsnippet
+
+snippet ul "" !w
+<ul>
+	${0:?}
+</ul>
+endsnippet
+
+snippet ol "" !w
+<ol>
+	${0:?}
+</ol>
+endsnippet
+
+snippet li "" !w
+<li>${0:?}</li>
+endsnippet
+
+snippet p "" !w
+<p>${0:?}</p>
+endsnippet
+
+snippet str "" !w
+<strong>${1:?}</strong> $0
+endsnippet
+
+snippet cod "" !w
+<code>
+	${0:?}
+</code>
+endsnippet
+
+snippet precod "" !b
+<pre><code>
+	${0:?}
+</code></pre>
+endsnippet
+
+snippet lab "" !b
+<label ${1:?}>${0:?}</label>
+endsnippet
+
+snippet imp "" !b
+<link rel="import" href="${0:?}"/>
+endsnippet
+
+snippet inp "" !b
+<input ${0:?}/>
+endsnippet
+
+snippet br "" !w
+<br>$0
+endsnippet
+
+snippet sel "" !b
+<select>
+	${0:?}
+</select>
+endsnippet
+
+snippet opt "" !b
+<option>${0:?}</option>
+endsnippet
+
+snippet viewport "" !b
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+endsnippet
+
+snippet href "" !b
+<a href="$1">$0</a>
+endsnippet
+
+# CSS
+snippet col "" !w
+color: $0;
+endsnippet
+
+snippet bgc "" !b
+background-color: $0;
+endsnippet
