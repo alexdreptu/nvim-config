@@ -12,7 +12,7 @@ set number
 set noshowmatch
 set history=50
 set ruler
-set showcmd
+set noshowcmd
 set incsearch
 set autoindent
 set smartindent
@@ -155,7 +155,6 @@ set omnifunc=javascriptcomplete#CompleteJS
 " when you select a function in omni menu and press enter,
 " doesn't insert new line, instead it just selects the function
 "inoremap <silent> <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>" 
-"inoremap <silent> <expr> <cr> pumvisible() "\<C-y>"
 
 "inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
             "\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
