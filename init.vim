@@ -300,14 +300,14 @@ let g:ale_python_pylint_options = '
 let g:ale_lint_on_save = 1
 "let g:ale_lint_on_text_changed = 1
 "let g:ale_lint_on_enter = 0
+let g:ale_set_highlights = 0
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
 let g:ale_sign_column_always = 1
 let g:ale_statusline_format = ['✗ %d', '⚠ %d', '⬥ ok']
-let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
 
-nmap <silent> <M-j> <Plug>(ale_next_wrap)
-nmap <silent> <M-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-x>j <Plug>(ale_next_wrap)
+nmap <silent> <C-x>k <Plug>(ale_previous_wrap)
 
 hi ALEErrorSign     guifg=lightred      ctermfg=red
 hi ALEError         guifg=lightred      ctermfg=red
