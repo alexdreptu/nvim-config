@@ -79,7 +79,7 @@ set clipboard=unnamed
 set hidden
 set colorcolumn=80
 set completeopt-=preview
-set completeopt=longest,menuone
+set completeopt=menuone
 set autoread
 set report=99999 " temporarily till I know what to do about it
 "set foldmethod=syntax " really slow especially for omnicompletion
@@ -154,19 +154,24 @@ set omnifunc=javascriptcomplete#CompleteJS
 
 " when you select a function in omni menu and press enter,
 " doesn't insert new line, instead it just selects the function
-" but seems to create issues with clang_completion
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>" 
+"inoremap <silent> <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<cr>" 
+"inoremap <silent> <expr> <cr> pumvisible() "\<C-y>"
+
+"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+            "\ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
+"inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+            "\ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<cr>'
 
 " open omni completion menu closing previous if open and opening new menu without changing the text
 inoremap <silent> <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>M-j>\<lt>M-k>\<lt>Down>" : ""<cr>'
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-@> <C-x><C-o>
 
 inoremap <expr><M-j> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr><M-k> pumvisible() ? "\<C-p>" : "\<Up>"
-"inoremap <expr><M-l> pumvisible() ? "\<C-y>" : "\<C-l>"
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "<C-y>"
 
 "noremap <Leader>y "*y
 "noremap <Leader>p "*p
@@ -223,10 +228,6 @@ if !exists(":DiffOrig")
 endif
 
 "autocmd CursorMoved * exe printf('match IncSearch /\<%s\>/', expand('<cword>'))
-
-" set colorscheme by filetype
-"au FileType c colorscheme <c_colorscheme here>
-"au FileType python colorscheme <python colorscheme here>
 
 " auto leave insert mode
 "au CursorHoldI * stopinsert
@@ -287,38 +288,32 @@ nnoremap <silent> <A-f> :NERDTreeToggle <cr>
 " NERDCommenter related
 nnoremap <silent> <C-Space> :call NERDComment(0, "toggle") <cr>
 
-" Syntastic related
-let g:syntastic_check_on_open = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_enable_balloons = 0
-"let g:syntastic_enable_highlighting = 0
-"let g:syntastic_always_populate_loc_list=1
-"let g:syntastic_auto_jump=1
-let g:syntastic_go_checkers = ['gofmt']
-let g:syntastic_python_checkers=['pylint']
-let g:syntastic_python_pylint_args=[
-            \ '--disable=missing-docstring',
-            \ '--disable=too-many-arguments',
-            \ '--disable=too-many-instance-attributes']
-let g:syntastic_java_checkers = ['javac']
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_html_checkers = ['']
-let g:syntastic_css_checkers = ['prettycss --ignore suggest-relative-unit']
-let g:syntastic_c_checkers = ['clang_check']
-let g:syntastic_c_compiler = 'clang'
-let g:syntastic_c_compiler_options = '-W -Wall -std=gnu11'
-let g:syntastic_c_check_header = 0 " normally should be set to 1
-let g:syntastic_c_auto_refresh_includes = 0 " the same
-let g:syntastic_c_remove_include_errors = 1
-let g:syntastic_c_include_dirs = [
-            \ '/usr/i686-w64-mingw32/include/',
-            \ '/usr/x86_64-w64-mingw32/include/',
-            \ '/usr/share/arduino/hardware/tools/avr/lib/avr/include/',
-            \ '/usr/lib/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/',
-            \ '/usr/lib/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include-fixed/',
-            \ $HOME.'/usr/include/']
+" ALE related
+let g:ale_linters = {
+            \ 'python': ['pylint'],
+            \ 'go': ['go', 'golint'],
+            \}
+let g:ale_python_pylint_options = '
+            \ --disable=missing-docstring
+            \ --disable=too-many-arguments
+            \ --disable=too-many-instance-attributes'
+let g:ale_lint_on_save = 1
+"let g:ale_lint_on_text_changed = 1
+"let g:ale_lint_on_enter = 0
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_column_always = 1
+let g:ale_statusline_format = ['✗ %d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['X %d', '! %d', '⬥ ok']
+
+nmap <silent> <M-j> <Plug>(ale_next_wrap)
+nmap <silent> <M-k> <Plug>(ale_previous_wrap)
+
+hi ALEErrorSign     guifg=lightred      ctermfg=red
+hi ALEError         guifg=lightred      ctermfg=red
+hi ALEWarningSign   guifg=yellow        ctermfg=yellow
+hi ALEWarning       gui=undercurl       guisp=yellow
+
 
 " TagBar related
 let g:tagbar_compact = 1
@@ -364,30 +359,17 @@ let g:ctrlp_open_multiple_files = '2i'
 let g:ctrlp_open_new_file = 't'
 let g:ctrlp_tabpage_position = "ac"
 let g:ctrlp_extensions = ['tag', 'buffertag', 'line']
+let g:ctrlp_map = '<C-x>p'
 let g:ctrlp_prompt_mappings = {
-            \ 'PrtSelectMove("j")': ['<c-j>', '<down>'],
-            \ 'PrtSelectMove("k")': ['<c-k>', '<up>'],
-            \ 'PrtHistory(-1)': ['<c-j>'],
-            \ 'PrtHistory(1)': ['<c-k>'],
+            \ 'PrtSelectMove("j")': ['<C-j>', '<down>'],
+            \ 'PrtSelectMove("k")': ['<C-k>', '<up>'],
+            \ 'PrtHistory(-1)': ['<C-j>'],
+            \ 'PrtHistory(1)': ['<C-k>'],
             \ }
 nnoremap <silent> <C-x>b :CtrlPBuffer<cr>
 nnoremap <silent> <C-x>l :CtrlPLine<cr>
 nnoremap <silent> <C-x>ta :CtrlPTag<cr>
 nnoremap <silent> <C-x>tc :CtrlPBufTag<cr>
-
-" Clang_Complete related
-let g:clang_snippets = 0
-let g:clang_snippets_engine = 'ultisnips'
-let g:clang_complete_auto = 0
-" to be set depending on the filetype in case of using c++ as well
-let g:clang_user_options = '-W -Wall -Wextra -std=gnu11
-            \ -I/usr/i686-w64-mingw32/include/
-            \ -I/usr/x86_64-w64-mingw32/include/
-            \ -I/usr/share/arduino/hardware/tools/avr/lib/avr/include/
-            \ -I/usr/lib/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/
-            \ -I/usr/lib/arduino/hardware/tools/avr/lib/gcc/avr/4.3.2/include/-fixed/'
-let g:clang_complete_macros = 1
-let g:clang_complete_patterns = 0
 
 " Autoformat related
 if executable('clang-format')
@@ -397,6 +379,10 @@ endif
 if executable('autopep8')
     let g:formatdef_py_beautify = '"autopep8 -"'
     let g:formatters_python = ['py_beautify']
+endif
+if executable("shfmt")
+    let g:formatdef_shfmt = '"shfmt --"'
+    let g:formatters_sh = ['shfmt']
 endif
 if executable('js-beautify')
     let g:formatdef_js_beautify = '"js-beautify -f - -q -s 2 -t false -p true -m 2 -P false -E false -a false -b collapse"'
@@ -413,13 +399,6 @@ endif
 
 " TSuquyomi related
 let g:tsuquyomi_disable_quickfix = 1
-
-" Jedi related
-let g:jedi#use_tabs_not_buffers = 1
-let g:jedi#use_splits_not_buffers = "left"
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 1
-let g:jedi#show_call_signatures = "2"
 
 " GitGutter related
 "let g:gitgutter_sign_added = 'A'
@@ -459,8 +438,14 @@ let g:rust_fold = 0
 let g:rustfmt_fail_silently = 1
 
 " vim-racer related
-let g:racer_cmd = "~/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+"let g:racer_cmd = "~/.cargo/bin/racer"
+"let g:racer_experimental_completer = 1
+
+" YouCompleteMe related
+let g:ycm_key_list_select_completion = ['<M-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<M-k>', '<Up>']
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Automatic vim-plug installation
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -474,27 +459,24 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'equalsraf/neovim-gui-shim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-Plug 'vim-syntastic/syntastic'
-"Plug 'roxma/nvim-completion-manager'
+Plug 'w0rp/ale'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-surround'
 Plug 'SirVer/ultisnips'
 if executable('ctags')
     Plug 'majutsushi/tagbar'
-    Plug 'vim-scripts/AutoTag'
+    "Plug 'vim-scripts/AutoTag'
+    Plug 'ludovicchabant/vim-gutentags'
 endif
 if executable('go')
     Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 endif
-if executable('clang')
-    Plug 'Rip-Rip/clang_complete'
-endif
-"Plug 'davidhalter/jedi-vim'
+Plug 'Valloric/YouCompleteMe'
 Plug 'Chiel92/vim-autoformat'
 Plug 'mkitt/tabline.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
+"Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'jiangmiao/auto-pairs'
@@ -502,9 +484,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
 if executable('rustc')
     Plug 'rust-lang/rust.vim'
-endif
-if executable('racer')
-    Plug 'racer-rust/vim-racer'
 endif
 Plug 'vim-perl/vim-perl6'
 call plug#end()
