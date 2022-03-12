@@ -236,7 +236,7 @@ if !exists("autocommands_loaded")
         " filetype plugin indent on " automatically handled by vim-plug
         augroup vimrcEx
             au!
-            autocmd FileType text setlocal textwidth=100
+            autocmd FileType text setl textwidth=100
             autocmd BufReadPost *
                         \ if line("'\"") > 1 && line("'\"") <= line("$") |
                         \   exe "normal! g`\"" |
@@ -304,7 +304,7 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 40
 let g:NERDTreeMapOpenSplit = 'v'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-autocmd FileType nerdtree setlocal relativenumber
+autocmd FileType nerdtree setl relativenumber
 nnoremap <silent> <A-f> :NERDTreeToggle<CR>
 
 " ALE
@@ -328,7 +328,7 @@ let g:ale_linters = {
             \ 'c': ['clang'],
             \ 'cpp': ['clang'],
             \ 'python': ['flake8', 'mypy'],
-            \ 'go': ['go', 'golint'],
+            \ 'go': ['gopls'],
             \ 'javascript': ['eslint'],
             \ 'yaml': ['yamllint'],
             \ }
@@ -345,9 +345,9 @@ let g:ale_fixers = {
             \ 'yaml': ['yamlfix'],
             \ }
 let g:ale_sh_shfmt_options = '-i 4 -ci -s'
-let g:ale_python_black_options = '--line-length 100 --fast --skip-string-normalization'
-let g:ale_python_flake8_options = '--max-line-length 100 --ignore E203 --ingore W503'
-let g:ale_python_isort_options = '--profile black -l 100'
+let g:ale_python_black_options = '--line-length 120 --fast --skip-string-normalization'
+let g:ale_python_flake8_options = '--max-line-length 120 --ignore E203 --ingore W503'
+let g:ale_python_isort_options = '--profile black -l 120'
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all --print-width 100'
 nmap <silent> <C-x>j <Plug>(ale_next_wrap)
 nmap <silent> <C-x>k <Plug>(ale_previous_wrap)
@@ -372,8 +372,8 @@ let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0}
 let g:Lf_CursorBlink = 0
 let g:Lf_ShowDevIcons = 0
 let g:Lf_CommandMap = {'<C-x>': ['<C-s>'], '<C-]>': ['<C-v>']}
-autocmd FileType leaderf setlocal nonumber
-autocmd FileType leaderf setlocal signcolumn=no
+autocmd FileType leaderf setl nonumber
+autocmd FileType leaderf setl signcolumn=no
 nnoremap <silent> <C-x>b :LeaderfBuffer<CR>
 nnoremap <silent> <C-x>B :LeaderfBufferAll<CR>
 nnoremap <silent> <C-x>f :LeaderfFile<CR>
@@ -401,6 +401,8 @@ let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 let g:go_highlight_operators = 1
 let g:go_auto_type_info = 0
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " rust.vim
 let g:rustfmt_autosave = 1

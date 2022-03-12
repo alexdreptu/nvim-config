@@ -1,4 +1,4 @@
-" Authoe: Alexandru Dreptu <alexdreptu@gmail.com>
+" Author: Alexandru Dreptu <alexdreptu@gmail.com>
 " URL: https://github.com/alexdreptu/nvim-config/blob/master/colors/naquadria.vim
 " NOTE: Depends on https://github.com/alexdreptu/nvim-config/tree/master/after/syntax/
 
@@ -92,7 +92,7 @@ let s:error_msg_color = {"attr": "none", "fg": s:gutter_orange_color.fg, "bg": s
 let s:vertical_split_color = {"attr": "none", "fg": "#636363", "bg": s:normal_color.bg}
 let s:column_color = {"attr": "none", "fg": "none", "bg": s:tab_line_color.bg}
 let s:dir_color = {"attr": "none", "fg": s:gutter_blue_color.fg, "bg": "none"}
-let s:match_paren_color = {"attr": "underline", "fg": "#ffb3ff", "bg": "none"}
+let s:match_paren_color = {"attr": "underline", "fg": "#ffffb3", "bg": "none"}
 let s:status_line_color = {"attr": "none", "fg": "#cccccc", "bg": s:tab_line_color.bg}
 let s:status_line_nc_color = {"attr": "none", "fg": s:comment_color.fg, "bg": s:status_line_color.bg}
 let s:status_line_change_color = {"attr": "none", "fg": s:gutter_green_color.fg,"bg": s:status_line_color.bg}
